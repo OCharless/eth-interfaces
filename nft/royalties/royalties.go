@@ -5,11 +5,11 @@ package royalties
 import (
 	"math/big"
 
+	"github.com/OCharless/eth-interfaces/base"
+	"github.com/OCharless/eth-interfaces/customerrors"
 	"github.com/OCharless/eth-interfaces/inferences/ERC721Complete"
-	"github.com/OCharless/eth-interfaces/internal/base"
-	"github.com/OCharless/eth-interfaces/internal/customerrors"
-	"github.com/OCharless/eth-interfaces/internal/nft"
-	"github.com/OCharless/eth-interfaces/internal/utils"
+	"github.com/OCharless/eth-interfaces/nft"
+	"github.com/OCharless/eth-interfaces/utils"
 	"github.com/ethereum/go-ethereum/common"
 )
 

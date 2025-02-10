@@ -3,7 +3,7 @@ package enumerable
 import (
 	"encoding/hex"
 
-	"github.com/OCharless/eth-interfaces/internal/nft"
+	"github.com/OCharless/eth-interfaces/nft"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 

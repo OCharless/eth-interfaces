@@ -9,9 +9,9 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/OCharless/eth-interfaces/internal/base"
-	"github.com/OCharless/eth-interfaces/internal/erc20"
-	"github.com/OCharless/eth-interfaces/internal/utils"
+	"github.com/OCharless/eth-interfaces/base"
+	"github.com/OCharless/eth-interfaces/erc20"
+	"github.com/OCharless/eth-interfaces/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/stretchr/testify/assert"

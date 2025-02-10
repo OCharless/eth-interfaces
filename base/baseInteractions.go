@@ -12,10 +12,10 @@ import (
 	"math/big"
 	"strings"
 
+	"github.com/OCharless/eth-interfaces/customerrors"
 	"github.com/OCharless/eth-interfaces/inferences/IERC165"
 	Disperse "github.com/OCharless/eth-interfaces/inferences/disperse"
-	"github.com/OCharless/eth-interfaces/internal/customerrors"
-	"github.com/OCharless/eth-interfaces/internal/utils"
+	"github.com/OCharless/eth-interfaces/utils"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"

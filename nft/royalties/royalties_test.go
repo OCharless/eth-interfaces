@@ -6,10 +6,10 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/OCharless/eth-interfaces/internal/base"
-	"github.com/OCharless/eth-interfaces/internal/nft"
-	"github.com/OCharless/eth-interfaces/internal/nft/royalties"
-	"github.com/OCharless/eth-interfaces/internal/utils"
+	"github.com/OCharless/eth-interfaces/base"
+	"github.com/OCharless/eth-interfaces/nft"
+	"github.com/OCharless/eth-interfaces/nft/royalties"
+	"github.com/OCharless/eth-interfaces/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/assert"
 )

@@ -3,7 +3,7 @@ package contractextension
 import (
 	"context"
 
-	"github.com/OCharless/eth-interfaces/internal/utils"
+	"github.com/OCharless/eth-interfaces/utils"
 	"github.com/ethereum/go-ethereum/common"
 )
 

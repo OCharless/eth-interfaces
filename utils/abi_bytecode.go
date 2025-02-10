@@ -15,7 +15,7 @@ import (
 
 func LoadBytecode(path string) ([]byte, error) {
 	_, filename, _, _ := runtime.Caller(0)
-	dir := filepath.Dir(filepath.Dir(filepath.Dir(filename)))
+	dir := filepath.Dir(filepath.Dir(filename))
 
 	content, err := os.ReadFile(dir + path)
 	if err != nil {
@@ -27,7 +27,7 @@ func LoadBytecode(path string) ([]byte, error) {
 
 func LoadAbi(path string) (abi.ABI, error) {
 	_, filename, _, _ := runtime.Caller(0)
-	dir := filepath.Dir(filepath.Dir(filepath.Dir(filename)))
+	dir := filepath.Dir(filepath.Dir(filename))
 
 	content, err := os.ReadFile(dir + path)
 	if err != nil {

@@ -5,10 +5,10 @@ package enumerable_test
 import (
 	"testing"
 
-	"github.com/OCharless/eth-interfaces/internal/base"
-	"github.com/OCharless/eth-interfaces/internal/nft"
-	"github.com/OCharless/eth-interfaces/internal/nft/enumerable"
-	"github.com/OCharless/eth-interfaces/internal/utils"
+	"github.com/OCharless/eth-interfaces/base"
+	"github.com/OCharless/eth-interfaces/nft"
+	"github.com/OCharless/eth-interfaces/nft/enumerable"
+	"github.com/OCharless/eth-interfaces/utils"
 	"github.com/stretchr/testify/assert"
 )
 
