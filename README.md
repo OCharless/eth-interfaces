@@ -1,66 +1,33 @@
-## Foundry
+# eth-interfaces
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A Go package providing Ethereum interface definitions and related utilities for Ethereum development.
 
-Foundry consists of:
+## Overview
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+The `eth-interfaces` package defines interfaces commonly used in Ethereum development. It offers abstractions for interacting with Ethereum nodes, smart contracts, and blockchain data, which makes testing and integration simpler and more consistent across projects.
 
-## Documentation
+## Features
 
-https://book.getfoundry.sh/
+- **Ethereum Client Interfaces**: Simplified interactions with Ethereum nodes.
+- **Smart Contract Bindings**: Structured approaches for working with Ethereum smart contracts.
+- **Utility Functions**: Common helper functions to streamline blockchain operations.
+
+## Installation
+
+Install the package using `go get`:
+
+```bash
+go get github.com/OCharless/eth-interfaces
+```
 
 ## Usage
 
-### Build
+See directly in the [example directory](example).
 
-```shell
-$ forge build
-```
+## Contributing
 
-### Test
+Contributions are welcome! Please fork the repository, create a feature branch, and open a pull request for review.
 
-```shell
-$ forge test
-```
+## License
 
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
