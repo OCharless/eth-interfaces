@@ -269,9 +269,10 @@ func (b *BaseInteractions) CheckSignatures(contractAddress common.Address, signa
 		return fmt.Errorf("failed to get contract bytecode: %w", err)
 	}
 	notSupported := ""
+	byteCodeHex := common.Bytes2Hex(byteCode)
 	for _, signature := range signatures {
 		selector := utils.GetFunctionSelector(signature)
-		if !strings.Contains(common.Bytes2Hex(byteCode), selector) {
+		if !strings.Contains(byteCodeHex, selector) {
 			if notSupported != "" {
 				notSupported = fmt.Sprintf("%s, %s: %s", notSupported, signature, selector)
 			} else {
@@ -323,20 +324,3 @@ func (b *BaseInteractions) MatchErrors(abiString string, errBytes []byte) (strin
 	}
 	return errorName, nil
 }
-
-// func (b *BaseInteractions) WatchEvent(abiPath string, eventName string, eventArgs interface{}) error {
-// 	abi, err := utils.LoadAbi(abiPath)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	contract, err := bind.NewContract(abi, contractAddress, b.Client) // Replace with your contract address
-// 	if err != nil {
-// 		return err
-// 	}
-// 	event, err := contract.WatchEvent(context.Background(), eventName, eventArgs)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	<-event.Chan()
-// 	return nil
-// }

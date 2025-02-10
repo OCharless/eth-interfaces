@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/OCharless/eth-interfaces/base"
+	"github.com/OCharless/eth-interfaces/inferences/ERC721Complete"
 	"github.com/OCharless/eth-interfaces/nft"
 	"github.com/OCharless/eth-interfaces/nft/royalties"
 	"github.com/OCharless/eth-interfaces/utils"
@@ -17,8 +18,8 @@ import (
 // Test_RoyaltiesInfos verifies the RoyaltiesInfos method for valid and invalid token IDs using a table-driven approach.
 func Test_RoyaltiesInfos(t *testing.T) {
 	backend, _, contractAddr, privKey, err := utils.SetupBlockchain(t,
-		"/build/ERC721ARoyalties.abi",
-		"/build/ERC721ARoyalties.bin",
+		ERC721Complete.ERC721CompleteABI,
+		ERC721Complete.ERC721CompleteBin,
 		"MyNFT",
 		"MNFT",
 	)

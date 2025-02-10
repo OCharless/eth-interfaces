@@ -11,6 +11,8 @@ import (
 
 	"github.com/OCharless/eth-interfaces/base"
 	"github.com/OCharless/eth-interfaces/erc20"
+	"github.com/OCharless/eth-interfaces/inferences/ERC20Burnable"
+	"github.com/OCharless/eth-interfaces/inferences/ERC721Complete"
 	"github.com/OCharless/eth-interfaces/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -20,8 +22,8 @@ import (
 // Test_DeploySuccessfully tests if the blockchain setup and contract deployment succeed without errors.
 func Test_DeploySuccessfully(t *testing.T) {
 	backend, _, _, _, err := utils.SetupBlockchain(t,
-		"/build/ERC20Burnable.abi",
-		"/build/ERC20Burnable.bin",
+		ERC20Burnable.ERC20BurnableABI,
+		ERC20Burnable.ERC20BurnableBin,
 	)
 	assert.Nil(t, err, "failed to create interactions interface, error: %w", err)
 	backend.Close()
@@ -30,8 +32,8 @@ func Test_DeploySuccessfully(t *testing.T) {
 // Test_Instantiation verifies that the NFT interactions interface is correctly instantiated using various contracts, including a valid NFT contract, an empty contract, and an ERC20 contract.
 func Test_Instantiation(t *testing.T) {
 	backend, auth, contractAddress, privKey, err := utils.SetupBlockchain(t,
-		"/build/ERC20Burnable.abi",
-		"/build/ERC20Burnable.bin",
+		ERC20Burnable.ERC20BurnableABI,
+		ERC20Burnable.ERC20BurnableBin,
 	)
 	if err != nil {
 		t.Fatal(err)
@@ -47,8 +49,8 @@ func Test_Instantiation(t *testing.T) {
 	erc721CompleteContract, tx, _, err := utils.DeployContract(
 		auth,
 		backend.Client(),
-		"/build/ERC721Complete.abi",
-		"/build/ERC721Complete.bin",
+		ERC721Complete.ERC721CompleteABI,
+		ERC721Complete.ERC721CompleteBin,
 		"MyNFT", // Arg 1: name
 		"MNFT",  // Arg 2: symbol
 	)
@@ -116,8 +118,8 @@ func Test_Instantiation(t *testing.T) {
 // Test_Name verifies that the NFT contract correctly returns its name.
 func Test_Name(t *testing.T) {
 	backend, _, contractAddress, privKey, err := utils.SetupBlockchain(t,
-		"/build/ERC20Burnable.abi",
-		"/build/ERC20Burnable.bin",
+		ERC20Burnable.ERC20BurnableABI,
+		ERC20Burnable.ERC20BurnableBin,
 	)
 	if err != nil {
 		t.Fatal(err)
@@ -133,7 +135,7 @@ func Test_Name(t *testing.T) {
 	}{
 		{
 			Name:           "OK - Successfully get NFT name",
-			ExpectedResult: "NvidiaToken",
+			ExpectedResult: "TESTToken",
 			ContractAddr:   *contractAddress,
 		},
 	}
@@ -161,8 +163,8 @@ func Test_Name(t *testing.T) {
 // Test_Symbol verifies that the NFT contract correctly returns its symbol.
 func Test_Symbol(t *testing.T) {
 	backend, _, contractAddress, privKey, err := utils.SetupBlockchain(t,
-		"/build/ERC20Burnable.abi",
-		"/build/ERC20Burnable.bin",
+		ERC20Burnable.ERC20BurnableABI,
+		ERC20Burnable.ERC20BurnableBin,
 	)
 	if err != nil {
 		t.Fatal(err)
@@ -178,7 +180,7 @@ func Test_Symbol(t *testing.T) {
 	}{
 		{
 			Name:           "OK - Successfully get NFT symbol",
-			ExpectedResult: "NVD",
+			ExpectedResult: "TT",
 			ContractAddr:   *contractAddress,
 		},
 	}
@@ -206,8 +208,8 @@ func Test_Symbol(t *testing.T) {
 // Test_TotalSupply verifies that the total supply of NFTs is correctly reported by the contract.
 func Test_TotalSupply(t *testing.T) {
 	backend, _, contractAddress, privKey, err := utils.SetupBlockchain(t,
-		"/build/ERC20Burnable.abi",
-		"/build/ERC20Burnable.bin",
+		ERC20Burnable.ERC20BurnableABI,
+		ERC20Burnable.ERC20BurnableBin,
 	)
 	if err != nil {
 		t.Fatal(err)
@@ -223,7 +225,7 @@ func Test_TotalSupply(t *testing.T) {
 	}{
 		{
 			Name:           "OK - Successfully get NFT total supply",
-			ExpectedResult: big.NewInt(100_000_000_000),
+			ExpectedResult: big.NewInt(100_000_000),
 			ContractAddr:   *contractAddress,
 		},
 	}
@@ -251,8 +253,8 @@ func Test_TotalSupply(t *testing.T) {
 // Test_Transfer tests the transfer functionality and ensures that the token transfer behaves as expected.
 func Test_Transfer(t *testing.T) {
 	backend, _, contractAddress, privKey, err := utils.SetupBlockchain(t,
-		"/build/ERC20Burnable.abi",
-		"/build/ERC20Burnable.bin",
+		ERC20Burnable.ERC20BurnableABI,
+		ERC20Burnable.ERC20BurnableBin,
 	)
 	if err != nil {
 		t.Fatal(err)
@@ -345,8 +347,8 @@ func Test_Transfer(t *testing.T) {
 // Test_GetBalance verifies that the NFT balance is correctly returned for an address.
 func Test_GetBalance(t *testing.T) {
 	backend, auth, contractAddress, privKey, err := utils.SetupBlockchain(t,
-		"/build/ERC20Burnable.abi",
-		"/build/ERC20Burnable.bin",
+		ERC20Burnable.ERC20BurnableABI,
+		ERC20Burnable.ERC20BurnableBin,
 	)
 	if err != nil {
 		t.Fatal(err)
@@ -359,14 +361,14 @@ func Test_GetBalance(t *testing.T) {
 
 	balance, err := token.GetBalance()
 	assert.Nil(t, err)
-	assert.Equal(t, 0, balance.Cmp(big.NewInt(0).Mul(big.NewInt(100_000_000_000), big.NewInt(1e18))))
+	assert.Equal(t, 0, balance.Cmp(big.NewInt(0).Mul(big.NewInt(100_000_000), big.NewInt(1e18))))
 }
 
 // Test_BalanceOf verifies the BalanceOf function for different addresses.
 func Test_BalanceOf(t *testing.T) {
 	backend, auth, contractAddress, privKey, err := utils.SetupBlockchain(t,
-		"/build/ERC20Burnable.abi",
-		"/build/ERC20Burnable.bin",
+		ERC20Burnable.ERC20BurnableABI,
+		ERC20Burnable.ERC20BurnableBin,
 	)
 	if err != nil {
 		t.Fatal(err)
@@ -387,7 +389,7 @@ func Test_BalanceOf(t *testing.T) {
 		{
 			Name:           "OK - non empty balance",
 			Owner:          auth.From,
-			ExpectedResult: 100_000_000_000,
+			ExpectedResult: 100_000_000,
 		},
 		{
 			Name:           "OK - empty balance",
@@ -416,8 +418,8 @@ func Test_BalanceOf(t *testing.T) {
 // Test_Approve tests the approval functionality for token transfers.
 func Test_Approve(t *testing.T) {
 	backend, _, contractAddress, privKey, err := utils.SetupBlockchain(t,
-		"/build/ERC20Burnable.abi",
-		"/build/ERC20Burnable.bin",
+		ERC20Burnable.ERC20BurnableABI,
+		ERC20Burnable.ERC20BurnableBin,
 	)
 	if err != nil {
 		t.Fatal(err)
@@ -481,8 +483,8 @@ func Test_Approve(t *testing.T) {
 // Test_TokenMetaInfos verifies that the metadata (name, symbol, and URI) for a token is correctly retrieved.
 func Test_TokenMetaInfos(t *testing.T) {
 	backend, _, contractAddress, privKey, err := utils.SetupBlockchain(t,
-		"/build/ERC20Burnable.abi",
-		"/build/ERC20Burnable.bin",
+		ERC20Burnable.ERC20BurnableABI,
+		ERC20Burnable.ERC20BurnableBin,
 	)
 	if err != nil {
 		t.Fatal(err)
@@ -496,6 +498,6 @@ func Test_TokenMetaInfos(t *testing.T) {
 	// Test meta infos for token
 	tokenInfo, err := token.TokenMetaInfos()
 	assert.Nil(t, err)
-	assert.Equal(t, "NvidiaToken", tokenInfo.Name)
-	assert.Equal(t, "NVD", tokenInfo.Symbol)
+	assert.Equal(t, "TESTToken", tokenInfo.Name)
+	assert.Equal(t, "TT", tokenInfo.Symbol)
 }

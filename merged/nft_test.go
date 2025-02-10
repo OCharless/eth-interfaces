@@ -1,10 +1,11 @@
 package merged_test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/OCharless/eth-interfaces/base"
+	"github.com/OCharless/eth-interfaces/inferences/ERC721A"
+	"github.com/OCharless/eth-interfaces/inferences/ERC721Complete"
 	"github.com/OCharless/eth-interfaces/merged"
 	"github.com/OCharless/eth-interfaces/nft"
 	"github.com/OCharless/eth-interfaces/nft/enumerable"
@@ -17,9 +18,10 @@ import (
 func Test_Instantiation(t *testing.T) {
 
 	type args struct {
-		contractPath string
-		extensions   []merged.ExtensionEnum
-		signatures   []utils.Signature
+		abiString      string
+		byteCodeString string
+		extensions     []merged.ExtensionEnum
+		signatures     []utils.Signature
 	}
 
 	testCases := []struct {
@@ -31,8 +33,9 @@ func Test_Instantiation(t *testing.T) {
 		{
 			Name: "OK - Instantiate NFT with enumerable extension",
 			Args: args{
-				contractPath: "/build/ERC721A.%s",
-				extensions:   []merged.ExtensionEnum{merged.Enumerable},
+				abiString:      ERC721A.ERC721AABI,
+				byteCodeString: ERC721A.ERC721ABin,
+				extensions:     []merged.ExtensionEnum{merged.Enumerable},
 				signatures: []utils.Signature{
 					enumerable.TokenByIndex,
 					enumerable.TokenOfOwnerByIndex,
@@ -42,16 +45,18 @@ func Test_Instantiation(t *testing.T) {
 		{
 			Name: "OK - Instantiate NFT with royalties extension",
 			Args: args{
-				contractPath: "/build/ERC721ARoyalties.%s",
-				extensions:   []merged.ExtensionEnum{merged.Royalties},
-				signatures:   []utils.Signature{royalties.RoyaltyInfo},
+				abiString:      ERC721Complete.ERC721CompleteABI,
+				byteCodeString: ERC721Complete.ERC721CompleteBin,
+				extensions:     []merged.ExtensionEnum{merged.Royalties},
+				signatures:     []utils.Signature{royalties.RoyaltyInfo},
 			},
 		},
 		{
 			Name: "OK - Instantiate NFT with royalties extension and enumerable extension",
 			Args: args{
-				contractPath: "/build/ERC721ARoyalties.%s",
-				extensions:   []merged.ExtensionEnum{merged.Royalties, merged.Enumerable},
+				abiString:      ERC721Complete.ERC721CompleteABI,
+				byteCodeString: ERC721Complete.ERC721CompleteBin,
+				extensions:     []merged.ExtensionEnum{merged.Royalties, merged.Enumerable},
 				signatures: []utils.Signature{
 					royalties.RoyaltyInfo,
 					enumerable.TokenByIndex,
@@ -62,9 +67,10 @@ func Test_Instantiation(t *testing.T) {
 		{
 			Name: "NOK - Instantiate NFT with enumerable and royalties extensions",
 			Args: args{
-				contractPath: "/build/ERC721A.%s",
-				extensions:   []merged.ExtensionEnum{merged.Enumerable, merged.Royalties},
-				signatures:   []utils.Signature{enumerable.TokenOfOwnerByIndex, royalties.RoyaltyInfo},
+				abiString:      ERC721A.ERC721AABI,
+				byteCodeString: ERC721A.ERC721ABin,
+				extensions:     []merged.ExtensionEnum{merged.Enumerable, merged.Royalties},
+				signatures:     []utils.Signature{enumerable.TokenOfOwnerByIndex, royalties.RoyaltyInfo},
 			},
 			ExpectError:   true,
 			ExpectedError: "not supported functions: royaltyInfo(uint256,uint256)",
@@ -75,8 +81,8 @@ func Test_Instantiation(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 
 			backend, _, contractAddr, privKey, err := utils.SetupBlockchain(t,
-				fmt.Sprintf(tt.Args.contractPath, "abi"),
-				fmt.Sprintf(tt.Args.contractPath, "bin"),
+				tt.Args.abiString,
+				tt.Args.byteCodeString,
 				"MyNFT",
 				"MNFT",
 			)

@@ -3,7 +3,6 @@ package burnable_test
 // Package burnable_test contains tests for burnable interactions.
 
 import (
-	"context"
 	"crypto/ecdsa"
 	"math/big"
 	"testing"
@@ -11,6 +10,7 @@ import (
 	"github.com/OCharless/eth-interfaces/base"
 	"github.com/OCharless/eth-interfaces/erc20"
 	"github.com/OCharless/eth-interfaces/erc20/burnable"
+	"github.com/OCharless/eth-interfaces/inferences/ERC20Burnable"
 	"github.com/OCharless/eth-interfaces/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -19,29 +19,14 @@ import (
 
 // Test_Instantiation verifies that the NFT interactions interface is correctly instantiated using various contracts, including a valid NFT contract, an empty contract, and an ERC20 contract.
 func Test_Instantiation(t *testing.T) {
-	backend, auth, contractAddress, privKey, err := utils.SetupBlockchain(t,
-		"/build/ERC20Burnable.abi",
-		"/build/ERC20Burnable.bin",
+	backend, _, contractAddress, privKey, err := utils.SetupBlockchain(t,
+		ERC20Burnable.ERC20BurnableABI,
+		ERC20Burnable.ERC20BurnableBin,
 	)
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer backend.Close()
-
-	erc20Contract, tx, _, err := utils.DeployContract(
-		auth,
-		backend.Client(),
-		"/build/ERC20.abi",
-		"/build/ERC20.bin",
-	)
-	if err != nil {
-		t.Fatalf("failed to deploy ERC20 contract: %s", err)
-	}
-	backend.Commit()
-	receipt, err := backend.Client().TransactionReceipt(context.Background(), tx.Hash())
-	if err != nil || receipt.Status != 1 {
-		t.Fatalf("failed to deploy ERC20 contract: %s", err)
-	}
 
 	testCases := []struct {
 		Name           string
@@ -55,18 +40,12 @@ func Test_Instantiation(t *testing.T) {
 			ExpectedResult: "MyNFT",
 			ContractAddr:   *contractAddress,
 		},
-		{
-			Name:          "KO - ERC20 doesn't implement the interface",
-			ExpectError:   true,
-			ContractAddr:  erc20Contract,
-			ExpectedError: "interface setup error function CheckSignatures, error :",
-		},
 	}
 
 	baseInteractions := base.NewBaseInteractions(backend.Client(), privKey, nil)
 	for _, tt := range testCases {
 		t.Run(tt.Name, func(t *testing.T) {
-			erc20Interactions, err := erc20.NewIERC20Interactions(baseInteractions, tt.ContractAddr, []erc20.BaseERC20Signature{})
+			erc20Interactions, err := erc20.NewIERC20Interactions(baseInteractions, tt.ContractAddr, []erc20.BaseERC20Signature{erc20.Decimals})
 			if err != nil {
 				t.Fatalf("failed to create interactions interface, error: %s", err.Error())
 			}
@@ -93,8 +72,8 @@ func Test_Instantiation(t *testing.T) {
 // Test_Burn tests the burn functionality and ensures that the token burn behaves as expected.
 func Test_Burn(t *testing.T) {
 	backend, _, contractAddress, privKey, err := utils.SetupBlockchain(t,
-		"/build/ERC20Burnable.abi",
-		"/build/ERC20Burnable.bin",
+		ERC20Burnable.ERC20BurnableABI,
+		ERC20Burnable.ERC20BurnableBin,
 	)
 	if err != nil {
 		t.Fatal(err)

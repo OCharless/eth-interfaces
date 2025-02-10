@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/OCharless/eth-interfaces/base"
+	"github.com/OCharless/eth-interfaces/inferences/ERC721Complete"
 	"github.com/OCharless/eth-interfaces/nft"
 	"github.com/OCharless/eth-interfaces/nft/enumerable"
 	"github.com/OCharless/eth-interfaces/utils"
@@ -15,8 +16,8 @@ import (
 // Test_GetAddressOwnedTokens tests retrieval of tokens owned by an address and validates that the number of tokens matches the balance.
 func Test_GetAddressOwnedTokens(t *testing.T) {
 	backend, auth, contractAddr, privKey, err := utils.SetupBlockchain(t,
-		"/build/ERC721A.abi",
-		"/build/ERC721A.bin",
+		ERC721Complete.ERC721CompleteABI,
+		ERC721Complete.ERC721CompleteBin,
 		"MyNFT",
 		"MNFT",
 	)
@@ -44,8 +45,8 @@ func Test_GetAddressOwnedTokens(t *testing.T) {
 // Test_GetAllTokenIDs tests retrieval of all token IDs and validates that the total supply equals the number of tokens returned.
 func Test_GetAllTokenIDs(t *testing.T) {
 	backend, _, contractAddr, privKey, err := utils.SetupBlockchain(t,
-		"/build/ERC721A.abi",
-		"/build/ERC721A.bin",
+		ERC721Complete.ERC721CompleteABI,
+		ERC721Complete.ERC721CompleteBin,
 		"MyNFT",
 		"MNFT",
 	)
